@@ -10,7 +10,7 @@ import database from './database';
 import dbConfig from '../cfg/db-config';
 
 // Models
-import './user/model';
+import User from './user/model';
 
 // Application
 const app = new Koa();
@@ -21,11 +21,14 @@ app.context.db = database(dbConfig[process.env.NODE_ENV]);
 // Seed
 // todo: extract to seed script
 const createUser = () => {
-    app.context.db.collection('users').insert({
+    const user = new User({
         username: 'nmmascia',
         name: 'Nicholas Mascia',
         birthdate: new Date('Mar 26 1988'),
+        password: 'password',
     });
+
+    user.save();
 };
 
 app.context.db.models.User.find()
