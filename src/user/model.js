@@ -17,6 +17,9 @@ const userSchema = new Schema({
         required: true,
         unique: true,
     },
+    performances: {
+        type: Array,
+    },
 });
 
 userSchema.pre('save', async function (next) {

@@ -3,7 +3,7 @@ import bodyParser from 'koa-body-parser';
 import convert from 'koa-convert';
 import debug from 'debug';
 import Koa from 'koa';
-import koaRouter from 'koa-router';
+import Router from 'koa-router';
 import logger from 'koa-logger';
 
 import database from './database';
@@ -12,11 +12,14 @@ import dbConfig from '../cfg/db-config';
 // Models
 import User from './user/model';
 
+// Routes
+import userRoutes from './user/routes';
+
 // Application
 const app = new Koa();
 
 // Database
-app.context.db = database(dbConfig[process.env.NODE_ENV]);
+database(dbConfig[process.env.NODE_ENV]);
 
 // Seed
 // todo: extract to seed script
@@ -31,11 +34,7 @@ const createUser = () => {
     user.save();
 };
 
-app.context.db.models.User.find()
-.then(res => res.length === 0 ? createUser() : null);
-
-// Router
-const router = koaRouter();
+User.find().then(res => res.length === 0 ? createUser() : null);
 
 // Logging
 const log = debug('ap.application');
@@ -45,9 +44,16 @@ const errorLog = debug('ap.application.error');
 app.use(convert(bodyParser()));
 app.use(logger());
 
-// Routes
+// Router
+userRoutes(app);
+
+const router = new Router();
+
 router.get('/', async ctx => {
-    ctx.body = await app.context.db.models.User.findOne();
+    ctx.body = {
+        application: 'apollo',
+        status: 'ok',
+    };
 });
 
 app.use(router.routes());
