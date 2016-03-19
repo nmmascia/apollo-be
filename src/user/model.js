@@ -3,7 +3,7 @@ import debug from 'debug';
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const log = debug('ap.models.user');
+const log = debug('ap.models.user'); // eslint-disable-line no-unused-vars
 
 const userSchema = new Schema({
     birthdate: Date,
@@ -18,7 +18,7 @@ const userSchema = new Schema({
         unique: true,
     },
     performances: {
-        type: Array,
+        type: [Schema.Types.ObjectId],
     },
 });
 

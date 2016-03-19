@@ -11,9 +11,12 @@ import dbConfig from '../cfg/db-config';
 
 // Models
 import User from './user/model';
+import Peformance from './performance/model';
 
 // Routes
 import userRoutes from './user/routes';
+import performanceRoutes from './performance/routes';
+import poemRoutes from './poem/routes';
 
 // Application
 const app = new Koa();
@@ -46,6 +49,8 @@ app.use(logger());
 
 // Router
 userRoutes(app);
+performanceRoutes(app);
+poemRoutes(app);
 
 const router = new Router();
 

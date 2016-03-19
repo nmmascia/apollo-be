@@ -3,12 +3,17 @@ import Router from 'koa-router';
 
 import {
     findById,
+    getRandomPoem,
 } from './service';
 
-const log = debug('ap.user.routes'); // eslint-disable-line no-unused-vars
+const log = debug('ap.poem.routes'); // eslint-disable-line no-unused-vars
 
 const router = new Router({
-    prefix: '/user',
+    prefix: '/poem',
+});
+
+router.get('/', async ctx => {
+    ctx.body = await getRandomPoem();
 });
 
 router.get('/:id', async ctx => {
