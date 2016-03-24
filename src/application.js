@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import bodyParser from 'koa-body-parser';
+import bodyParser from 'koa-bodyparser';
 import convert from 'koa-convert';
 import debug from 'debug';
 import Koa from 'koa';
@@ -44,7 +44,7 @@ const log = debug('ap.application');
 const errorLog = debug('ap.application.error');
 
 // Middlewares
-app.use(convert(bodyParser()));
+app.use(bodyParser());
 app.use(logger());
 
 // Router
