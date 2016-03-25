@@ -8,10 +8,7 @@ const poemSchema = new Schema({
     title: String,
     author: String,
     lines: [String],
+    linecount: Number,
 });
 
 export default mongoose.model('Poem', poemSchema);
-
-// todo
-// poetrydb isn't particularly fast
-// should consume api
