@@ -12,7 +12,7 @@ const router = new Router({
     prefix: '/poem',
 });
 
-router.get('/', async ctx => {
+router.get('/random', async ctx => {
     ctx.body = await getRandomPoem();
 });
 
