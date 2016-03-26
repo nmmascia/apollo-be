@@ -9,7 +9,11 @@ export const createUser = async ({ username, password }) => {
 };
 
 export const findById = async _id => {
-    return await User
-    .findOne({ _id })
-    .select({ password: 0, __v: 0 });
-};
+    try {
+        return await User
+        .findOne({ _id })
+        .select({ password: 0, __v: 0 });
+    } catch (err) {
+        throw new Error(err);
+    }
+}
