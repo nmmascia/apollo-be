@@ -51,9 +51,9 @@ app.use(bodyParser());
 app.use(logger());
 
 // Router
-userRoutes(app);
-performanceRoutes(app);
-poemRoutes(app);
+app.use(userRoutes());
+app.use(performanceRoutes());
+app.use(poemRoutes());
 
 const router = new Router();
 

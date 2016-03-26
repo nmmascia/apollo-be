@@ -22,4 +22,4 @@ router.get('/:id', async ctx => {
     ctx.body = await findById(ctx.params.id);
 });
 
-export default app => app.use(router.routes());
+export default () => router.routes();
