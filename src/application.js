@@ -8,10 +8,12 @@ import logger from 'koa-logger';
 
 import database from './database';
 import dbConfig from '../cfg/db-config';
+import seedPoems from './utils/seed-poems';
 
 // Models
 import User from './user/model';
 import Peformance from './performance/model';
+import Poem from './poem/model';
 
 // Routes
 import userRoutes from './user/routes';
@@ -38,6 +40,7 @@ const createUser = () => {
 };
 
 User.find().then(res => res.length === 0 ? createUser() : null);
+Poem.find().then(res => res.length === 0 ? seedPoems() : null);
 
 // Logging
 const log = debug('ap.application');
