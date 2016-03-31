@@ -8,6 +8,7 @@ import logger from 'koa-logger';
 
 import database from './database';
 import dbConfig from '../cfg/db-config';
+import multipart from './middlewares/multipart';
 import seedPoems from './utils/seed-poems';
 
 // Models
@@ -47,6 +48,7 @@ const log = debug('ap.application');
 const errorLog = debug('ap.application.error');
 
 // Middlewares
+app.use(multipart());
 app.use(bodyParser());
 app.use(logger());
 

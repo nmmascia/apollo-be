@@ -25,6 +25,7 @@
     "nodemon": "1.9.1"
   },
   "dependencies": {
+    "async-busboy": "0.0.4",
     "babel-polyfill": "6.7.4",
     "bcrypt": "0.8.5",
     "bcrypt-as-promised": "1.1.0",

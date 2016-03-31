@@ -12,6 +12,7 @@ const router = new Router({
 });
 
 router.post('/', async ctx => {
+    ctx.body = { files: Boolean(ctx.request.files) };
     // todo
     // 1. send audio file to aws
     // 2. create performance
