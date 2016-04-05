@@ -3,8 +3,8 @@ import bodyParser from 'koa-bodyparser';
 import convert from 'koa-convert';
 import debug from 'debug';
 import Koa from 'koa';
-import Router from 'koa-router';
 import logger from 'koa-logger';
+import Router from 'koa-router';
 
 import database from './database';
 import dbConfig from '../cfg/db-config';
@@ -48,8 +48,8 @@ const log = debug('ap.application');
 const errorLog = debug('ap.application.error');
 
 // Middlewares
-app.use(multipart());
 app.use(bodyParser());
+app.use(multipart());
 app.use(logger());
 
 // Router

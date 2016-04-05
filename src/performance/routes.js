@@ -2,8 +2,9 @@ import debug from 'debug';
 import Router from 'koa-router';
 
 import {
+    createPerformance,
     findById,
-    uploadPerformance,
+    uploadPerformanceToStorage,
 } from './service';
 
 const log = debug('ap.performance.routes'); // eslint-disable-line no-unused-vars
@@ -12,10 +13,12 @@ const router = new Router({
     prefix: '/performance',
 });
 
-router.post('/', async ctx => {
+router.post('/create', async ctx => {
     try {
-        log('success...');
-        ctx.body = await uploadPerformance(ctx.request.files[0], 'file', 'filename');
+        const { userId, poemId } = ctx.request.body;
+        const file = ctx.request.files[0];
+        const { Key } = await uploadPerformanceToStorage(file, userId, poemId);
+        ctx.body = await createPerformance(Key, userId);
     } catch (err) {
         log('Error: ', err)
         throw new Error(err);
