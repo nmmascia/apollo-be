@@ -4,9 +4,8 @@ export default () => async (ctx, next) => {
     if (ctx.request.type === 'multipart/form-data') {
         const { files, fields } = await asyncBusboy(ctx.req);
         ctx.request.files = files;
-        ctx.request.fields = fields;
-        next();
-    } else {
-        next();
+        ctx.request.body = fields;
     }
+
+    return next();
 }
