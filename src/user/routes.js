@@ -12,8 +12,12 @@ const router = new Router({
     prefix: '/user',
 });
 
-router.post('/', async ctx => {
-    ctx.body = await createUser(ctx.request.body);
+router.post('/create', async ctx => {
+    try {
+        ctx.body = await createUser(ctx.request.body);
+    } catch (err) {
+        throw new Error(err);
+    }
 });
 
 router.get('/:id', async ctx => {
