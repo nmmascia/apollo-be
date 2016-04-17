@@ -26,12 +26,18 @@ const userSchema = new Schema({
 userSchema.pre('save', async function (next) {
     try {
         this.password = await bcrypt.hash(this.password, 10);
-        next();
+        return next();
     } catch (err) {
-        log(err);
+        throw new Error(err);
     }
 });
 
-userSchema.methods.validatePassword = input => bcrypt.compare(input, this.password);
+userSchema.methods.validatePassword = async function (input) {
+    try {
+        return await bcrypt.compare(input, this.password);
+    } catch (err) {
+        throw new Error(err);
+    }
+};
 
 export default mongoose.model('User', userSchema);

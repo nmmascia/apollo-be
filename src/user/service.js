@@ -16,4 +16,23 @@ export const findById = async _id => {
     } catch (err) {
         throw new Error(err);
     }
-}
+};
+
+export const findByUsername = async username => {
+    try {
+        return await User
+        .findOne({ username })
+        .select({ __v: 0 });
+    } catch (err) {
+        throw new Error(err);
+    }
+};
+
+// Authentication //
+
+export const createToken = async user => {
+    return new Promise(resolve => resolve({
+        code: 'mysecrettoken',
+        user,
+    }));
+};

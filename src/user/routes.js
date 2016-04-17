@@ -3,8 +3,14 @@ import Router from 'koa-router';
 
 import {
     createUser,
+    createToken,
     findById,
+    findByUsername,
 } from './service';
+
+import {
+    findById as findPoemById,
+} from '../poem/service';
 
 const log = debug('ap.user.routes'); // eslint-disable-line no-unused-vars
 
@@ -18,6 +24,28 @@ router.post('/create', async ctx => {
     } catch (err) {
         throw new Error(err);
     }
+});
+
+router.post('/auth', async ctx => {
+    const { username, password } = ctx.request.body;
+    let user = null;
+
+    try {
+        user = await findByUsername(username);
+        await user.validatePassword(password);
+        ctx.body = await createToken(user);
+    } catch (err) {
+        ctx.throw('There was an error!', 500);
+    }
+});
+
+router.get('/:id/profile', async ctx => {
+    const user = await findById(ctx.params.id);
+    const currentPoem = await findPoemById(user.currentPoemId);
+    ctx.body = {
+        user,
+        currentPoem,
+    };
 });
 
 router.get('/:id', async ctx => {
