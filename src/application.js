@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import bodyParser from 'koa-bodyparser';
 import convert from 'koa-convert';
+import cors from 'koa-cors';
 import debug from 'debug';
 import Koa from 'koa';
 import logger from 'koa-logger';
@@ -48,6 +49,7 @@ const log = debug('ap.application');
 const errorLog = debug('ap.application.error');
 
 // Middlewares
+app.use(convert(cors()));
 app.use(bodyParser());
 app.use(multipart());
 app.use(logger());
