@@ -7,18 +7,19 @@ const log = debug('ap.models.user'); // eslint-disable-line no-unused-vars
 
 const userSchema = new Schema({
     birthdate: Date,
+    currentPoemId: Schema.Types.ObjectId,
     name: String,
     password: {
         type: String,
         required: true,
     },
+    performances: {
+        type: [Schema.Types.ObjectId],
+    },
     username: {
         type: String,
         required: true,
         unique: true,
-    },
-    performances: {
-        type: [Schema.Types.ObjectId],
     },
 });
 
