@@ -11,8 +11,7 @@ export const createUser = async ({ username, password }) => {
 export const findById = async _id => {
     try {
         return await User
-        .findOne({ _id })
-        .select({ password: 0, __v: 0 });
+        .findOne({ _id });
     } catch (err) {
         throw new Error(err);
     }
@@ -21,8 +20,7 @@ export const findById = async _id => {
 export const findByUsername = async username => {
     try {
         return await User
-        .findOne({ username })
-        .select({ __v: 0 });
+        .findOne({ username });
     } catch (err) {
         throw new Error(err);
     }

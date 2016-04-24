@@ -40,4 +40,11 @@ userSchema.methods.validatePassword = async function (input) {
     }
 };
 
+userSchema.method('toJSON', function () {
+    const user = this.toObject();
+    user.id = user._id;
+    ['_id', '__v', 'password'].forEach(key => delete user[key]);
+    return user;
+});
+
 export default mongoose.model('User', userSchema);

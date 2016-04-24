@@ -11,4 +11,11 @@ const poemSchema = new Schema({
     linecount: Number,
 });
 
+poemSchema.method('toJSON', function () {
+    const poem = this.toObject();
+    poem.id = poem._id;
+    ['_id', '__v'].forEach(key => delete poem[key]);
+    return poem;
+});
+
 export default mongoose.model('Poem', poemSchema);

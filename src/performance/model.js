@@ -9,4 +9,11 @@ const performanceSchema = new Schema({
     userId: Schema.Types.ObjectId,
 });
 
+performanceSchema.method('toJSON', function () {
+    const performance = this.toObject();
+    performance.id = performance._id;
+    ['_id', '__v'].forEach(key => delete performance[key]);
+    return performance;
+});
+
 export default mongoose.model('Performance', performanceSchema);
