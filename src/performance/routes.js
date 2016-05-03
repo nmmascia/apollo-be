@@ -17,6 +17,8 @@ router.post('/create', async ctx => {
     try {
         const { userId, poemId } = ctx.request.body;
         const file = ctx.request.files[0];
+
+        log(userId, poemId);
         const { Key } = await uploadPerformanceToStorage(file, userId, poemId);
         ctx.body = await createPerformance(Key, userId);
     } catch (err) {
