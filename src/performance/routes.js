@@ -22,6 +22,48 @@ const router = new Router({
     prefix: '/performance',
 });
 
+router.get('/', async ctx => {
+    const MOCK_PERFORMANCES = [
+        {
+            id: '1',
+            title: 'Hello',
+            author: 'mr.hallo',
+            dateRecorded: new Date().toISOString(),
+        },
+        {
+            id: '2',
+            title: 'Hello',
+            author: 'mr.hallo',
+            dateRecorded: new Date().toISOString(),
+        },
+        {
+            id: '3',
+            title: 'Hello',
+            author: 'mr.hallo',
+            dateRecorded: new Date().toISOString(),
+        },
+        {
+            id: '4',
+            title: 'Hello',
+            author: 'mr.hallo',
+            dateRecorded: new Date().toISOString(),
+        },
+        {
+            id: '5',
+            title: 'Hello',
+            author: 'mr.hallo',
+            dateRecorded: new Date().toISOString(),
+        },
+    ];
+
+    const { userId } = ctx.request.query;
+
+    ctx.body = {
+        userId,
+        performances: MOCK_PERFORMANCES,
+    };
+});
+
 router.post('/create', async ctx => {
     try {
         const { userId, poemId } = ctx.request.body;
