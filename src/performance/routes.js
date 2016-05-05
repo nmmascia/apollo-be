@@ -1,11 +1,20 @@
 import debug from 'debug';
 import Router from 'koa-router';
+import slug from 'slug';
 
 import {
     createPerformance,
     findById,
     uploadPerformanceToStorage,
 } from './service';
+
+import {
+    findById as findPoemById,
+} from '../poem/service';
+
+import {
+    findById as findUserById,
+} from '../user/service';
 
 const log = debug('ap.performance.routes'); // eslint-disable-line no-unused-vars
 
@@ -18,8 +27,12 @@ router.post('/create', async ctx => {
         const { userId, poemId } = ctx.request.body;
         const file = ctx.request.files[0];
 
-        log(userId, poemId);
-        const { Key } = await uploadPerformanceToStorage(file, userId, poemId);
+        const { username } = await findUserById(userId);
+        const { title } = await findPoemById(poemId);
+
+        const slugTitle = slug(title, { lowercase: true });
+
+        const { Key } = await uploadPerformanceToStorage(file, username, slugTitle);
         ctx.body = await createPerformance(Key, userId);
     } catch (err) {
         log('Error: ', err)
