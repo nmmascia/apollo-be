@@ -16,6 +16,10 @@ import {
     findById as findUserById,
 } from '../user/service';
 
+import {
+    getAudioUrl,
+} from '../storage/aws-s3-storage';
+
 const log = debug('ap.performance.routes'); // eslint-disable-line no-unused-vars
 
 const router = new Router({
@@ -29,34 +33,46 @@ router.get('/', async ctx => {
             title: 'Hello',
             author: 'mr.hallo',
             dateRecorded: new Date().toISOString(),
+            key: 'nmmascia/An-Exiles-Farewell.wav'
         },
         {
             id: '2',
             title: 'Hello',
             author: 'mr.hallo',
             dateRecorded: new Date().toISOString(),
+            key: 'nmmascia/An-Exiles-Farewell.wav'
         },
         {
             id: '3',
             title: 'Hello',
             author: 'mr.hallo',
             dateRecorded: new Date().toISOString(),
+            key: 'nmmascia/An-Exiles-Farewell.wav'
         },
         {
             id: '4',
             title: 'Hello',
             author: 'mr.hallo',
             dateRecorded: new Date().toISOString(),
+            key: 'nmmascia/An-Exiles-Farewell.wav'
         },
         {
             id: '5',
             title: 'Hello',
             author: 'mr.hallo',
             dateRecorded: new Date().toISOString(),
+            key: 'nmmascia/An-Exiles-Farewell.wav'
         },
     ];
 
     const { userId } = ctx.request.query;
+
+    const $performances = MOCK_PERFORMANCES.map(perf => {
+        getAudioUrl(perf.key)
+        .then(url => perf.url = url);
+    });
+
+    await Promise.all($performances);
 
     ctx.body = {
         userId,

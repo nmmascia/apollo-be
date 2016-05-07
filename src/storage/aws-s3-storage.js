@@ -20,3 +20,12 @@ export const uploadFileToS3 = (audio, key) => {
         });
     });
 };
+
+export const getAudioUrl = key => {
+    return new Promise((resolve, reject) => {
+        s3.getSignedUrl('getObject', { Bucket, Key: key }, (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        });
+    });
+};
