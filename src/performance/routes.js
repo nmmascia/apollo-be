@@ -6,6 +6,7 @@ import {
     createPerformance,
     findById,
     uploadPerformanceToStorage,
+    findByUserId,
 } from './service';
 
 import {
@@ -16,10 +17,6 @@ import {
     findById as findUserById,
 } from '../user/service';
 
-import {
-    getAudioUrl,
-} from '../storage/aws-s3-storage';
-
 const log = debug('ap.performance.routes'); // eslint-disable-line no-unused-vars
 
 const router = new Router({
@@ -27,71 +24,35 @@ const router = new Router({
 });
 
 router.get('/', async ctx => {
-    const MOCK_PERFORMANCES = [
-        {
-            id: '1',
-            title: 'Hello',
-            author: 'mr.hallo',
-            dateRecorded: new Date().toISOString(),
-            key: 'nmmascia/An-Exiles-Farewell.wav'
-        },
-        {
-            id: '2',
-            title: 'Hello',
-            author: 'mr.hallo',
-            dateRecorded: new Date().toISOString(),
-            key: 'nmmascia/An-Exiles-Farewell.wav'
-        },
-        {
-            id: '3',
-            title: 'Hello',
-            author: 'mr.hallo',
-            dateRecorded: new Date().toISOString(),
-            key: 'nmmascia/An-Exiles-Farewell.wav'
-        },
-        {
-            id: '4',
-            title: 'Hello',
-            author: 'mr.hallo',
-            dateRecorded: new Date().toISOString(),
-            key: 'nmmascia/An-Exiles-Farewell.wav'
-        },
-        {
-            id: '5',
-            title: 'Hello',
-            author: 'mr.hallo',
-            dateRecorded: new Date().toISOString(),
-            key: 'nmmascia/An-Exiles-Farewell.wav'
-        },
-    ];
-
     const { userId } = ctx.request.query;
-
-    const $performances = MOCK_PERFORMANCES.map(perf => {
-        getAudioUrl(perf.key)
-        .then(url => perf.url = url);
-    });
-
-    await Promise.all($performances);
+    const performances = await findByUserId(userId);
 
     ctx.body = {
         userId,
-        performances: MOCK_PERFORMANCES,
+        performances,
     };
 });
 
 router.post('/create', async ctx => {
     try {
-        const { userId, poemId } = ctx.request.body;
+        const { userId, poemId, dateRecorded } = ctx.request.body;
         const file = ctx.request.files[0];
 
         const { username } = await findUserById(userId);
-        const { title } = await findPoemById(poemId);
+
+        const poem = await findPoemById(poemId);
+        const { title } = poem;
 
         const slugTitle = slug(title, { lowercase: true });
 
         const { Key } = await uploadPerformanceToStorage(file, username, slugTitle);
-        ctx.body = await createPerformance(Key, userId);
+        const performance = await createPerformance(Key, userId, poemId, dateRecorded);
+
+        ctx.body = {
+            performance,
+            poem,
+            userId,
+        };
     } catch (err) {
         log('Error: ', err)
         throw new Error(err);

@@ -7,6 +7,8 @@ const log = debug('ap.performance.model'); // eslint-disable-line no-unused-vars
 const performanceSchema = new Schema({
     key: String,
     userId: Schema.Types.ObjectId,
+    poemId: Schema.Types.ObjectId,
+    dateRecorded: Date,
 });
 
 performanceSchema.method('toJSON', function () {
