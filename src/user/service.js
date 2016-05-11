@@ -26,6 +26,17 @@ export const findByUsername = async username => {
     }
 };
 
+export const updateCurrentPoemForUser = async (_id, poemId) => {
+    try {
+        return await User
+        .update({ _id }, {
+            $set: { currentPoemId: poemId }
+        });
+    } catch (err) {
+        throw new Error(err);
+    }
+}
+
 // Authentication //
 
 export const createToken = async user => {

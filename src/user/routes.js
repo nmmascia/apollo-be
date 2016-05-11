@@ -6,10 +6,12 @@ import {
     createToken,
     findById,
     findByUsername,
+    updateCurrentPoemForUser
 } from './service';
 
 import {
     findById as findPoemById,
+    getRandomPoem,
 } from '../poem/service';
 
 const log = debug('ap.user.routes'); // eslint-disable-line no-unused-vars
@@ -45,6 +47,16 @@ router.get('/:id/profile', async ctx => {
     ctx.body = {
         user,
         currentPoem,
+    };
+});
+
+router.put('/:id/next-poem', async ctx => {
+    const poem = await getRandomPoem();
+    const user = await updateCurrentPoemForUser(ctx.params.id, poem.id);
+
+    ctx.body = {
+        userId: user._id,
+        poem,
     };
 });
 

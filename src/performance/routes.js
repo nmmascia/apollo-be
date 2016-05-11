@@ -26,10 +26,12 @@ const router = new Router({
 router.get('/', async ctx => {
     const { userId } = ctx.request.query;
     const performances = await findByUserId(userId);
+    const poems = await Promise.all(performances.map(async perf => findPoemById(perf.poemId)));
 
     ctx.body = {
         userId,
         performances,
+        poems,
     };
 });
 
