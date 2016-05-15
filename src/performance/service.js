@@ -51,3 +51,7 @@ export const findByUserId = async userId => {
 
     return await Promise.all($performances);
 }
+
+export const getPerformanceFeed = async () => {
+    return await Performance.find();
+}

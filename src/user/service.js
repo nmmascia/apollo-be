@@ -3,8 +3,8 @@ import User from './model';
 
 const log = debug('ap.user.service');
 
-export const createUser = async ({ username, password }) => {
-    const user = new User({ username, password });
+export const createUser = async ({ username, password, poemId }) => {
+    const user = new User({ username, password, currentPoemId: poemId });
     return await user.save();
 };
 

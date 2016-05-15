@@ -22,7 +22,8 @@ const router = new Router({
 
 router.post('/create', async ctx => {
     try {
-        ctx.body = await createUser(ctx.request.body);
+        const poem = await getRandomPoem();
+        ctx.body = await createUser({ ...ctx.request.body, poemId: poem.id });
     } catch (err) {
         throw new Error(err);
     }
@@ -44,6 +45,7 @@ router.post('/auth', async ctx => {
 router.get('/:id/profile', async ctx => {
     const user = await findById(ctx.params.id);
     const currentPoem = await findPoemById(user.currentPoemId);
+
     ctx.body = {
         user,
         currentPoem,

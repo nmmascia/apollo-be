@@ -7,6 +7,7 @@ import {
     findById,
     uploadPerformanceToStorage,
     findByUserId,
+    getPerformanceFeed,
 } from './service';
 
 import {
@@ -32,6 +33,18 @@ router.get('/', async ctx => {
         userId,
         performances,
         poems,
+    };
+});
+
+router.get('/feed', async ctx => {
+    const performances = await getPerformanceFeed();
+    const poems = await Promise.all(performances.map(async perf => findPoemById(perf.poemId)));
+    const users = await Promise.all(performances.map(async perf => findUserById(perf.userId)));
+
+    ctx.body = {
+        performances,
+        poems,
+        users,
     };
 });
 
