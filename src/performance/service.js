@@ -34,10 +34,7 @@ export const uploadPerformanceToStorage = async (audio, username, poemId) => {
     }
 }
 
-export const findByUserId = async userId => {
-    const performances = await Performance
-    .find({ userId });
-
+const addAudioUrl = async performances => {
     const $performances = performances.map(async perf => {
         const performance = perf.toObject();
         const url = await getAudioUrl(performance.key);
@@ -52,6 +49,18 @@ export const findByUserId = async userId => {
     return await Promise.all($performances);
 }
 
-export const getPerformanceFeed = async () => {
-    return await Performance.find();
+export const findByUserId = async userId => {
+    const performances = await Performance.find({ userId });
+    return await addAudioUrl(performances);
+}
+
+export const getPerformanceFeed = async (userId, count = 10) => {
+    const performances = await Performance
+    .find({
+        userId: {
+            $ne: userId,
+        },
+    });
+
+    return await addAudioUrl(performances);
 }

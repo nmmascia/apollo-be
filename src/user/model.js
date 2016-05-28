@@ -21,6 +21,9 @@ const userSchema = new Schema({
         required: true,
         unique: true,
     },
+    avatar: {
+        type: String
+    },
 });
 
 userSchema.pre('save', async function (next) {

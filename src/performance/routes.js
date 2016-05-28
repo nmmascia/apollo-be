@@ -37,7 +37,7 @@ router.get('/', async ctx => {
 });
 
 router.get('/feed', async ctx => {
-    const performances = await getPerformanceFeed();
+    const performances = await getPerformanceFeed(ctx.query.userId);
     const poems = await Promise.all(performances.map(async perf => findPoemById(perf.poemId)));
     const users = await Promise.all(performances.map(async perf => findUserById(perf.userId)));
 

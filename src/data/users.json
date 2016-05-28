@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Emily Dickinson",
+        "password": "password",
+        "username": "egurl55",
+        "avatar": "//www.poets.org/sites/default/files/styles/286x289/public/images/biographies/155_EmilyDickinsonSmall.jpg?itok=cQkQwNTK"
+    },
+    {
+        "name": "Ralph Waldo Emerson",
+        "password": "password",
+        "username": "ralph5251803",
+        "avatar": "//upload.wikimedia.org/wikipedia/commons/a/a5/RWEmerson1859.jpg"
+    },
+    {
+        "name": "E. E. Cummings",
+        "password": "password",
+        "username": "cmgs22",
+        "avatar": "//www.tygersofwrath.com/eecummings-earlyphoto.jpg"
+    },
+    {
+        "name": "Amy Lowell",
+        "password": "password",
+        "username": "amie1",
+        "avatar": "//d2hej51cni6o0x.cloudfront.net/images/magill%2Fph_0111215254-Lowell_A.jpg"
+    }
+]

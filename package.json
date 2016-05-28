@@ -41,6 +41,7 @@
     "koa-cors": "0.0.16",
     "koa-logger": "2.0.0",
     "koa-mongo": "0.5.0",
+    "koa-multer": "1.0.0",
     "koa-router": "7.0.1",
     "mkdirp": "0.5.1",
     "mongodb": "2.1.18",

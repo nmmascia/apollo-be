@@ -10,7 +10,8 @@ import Router from 'koa-router';
 import database from './database';
 import dbConfig from '../cfg/db-config';
 import multipart from './middlewares/multipart';
-import seedPoems from './utils/seed-poems';
+
+import seed from './utils/seed';
 
 // Models
 import User from './user/model';
@@ -28,25 +29,12 @@ const app = new Koa();
 // Database
 database(dbConfig[process.env.NODE_ENV]);
 
-// Seed
-// todo: extract to seed script
-const createUser = () => {
-    const user = new User({
-        username: 'nmmascia',
-        name: 'Nicholas Mascia',
-        birthdate: new Date('Mar 26 1988'),
-        password: 'password',
-    });
-
-    user.save();
-};
-
-User.find().then(res => res.length === 0 ? createUser() : null);
-Poem.find().then(res => res.length === 0 ? seedPoems() : null);
-
 // Logging
 const log = debug('ap.application');
 const errorLog = debug('ap.application.error');
+
+// Seed
+seed();
 
 // Middlewares
 app.use(convert(cors()));
