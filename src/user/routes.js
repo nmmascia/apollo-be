@@ -6,7 +6,8 @@ import {
     createToken,
     findById,
     findByUsername,
-    updateCurrentPoemForUser
+    updateCurrentPoemForUser,
+    updateUsersFollowings,
 } from './service';
 
 import {
@@ -64,6 +65,17 @@ router.put('/:id/next-poem', async ctx => {
 
 router.get('/:id', async ctx => {
     ctx.body = await findById(ctx.params.id);
+});
+
+router.post('/follow', async ctx => {
+    const { followerId, followedId } = ctx.request.body;
+
+    try {
+        const followship = await updateUsersFollowings(followerId, followedId);
+        ctx.body = { followship };
+    } catch (err) {
+        ctx.throw('There was an error!', 500);
+    }
 });
 
 export default () => router.routes();
