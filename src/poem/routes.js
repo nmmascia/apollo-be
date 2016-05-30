@@ -13,11 +13,23 @@ const router = new Router({
 });
 
 router.get('/random', async ctx => {
-    ctx.body = await getRandomPoem();
+    const poem = await getRandomPoem();
+
+    ctx.body = {
+        poems: [
+            poem,
+        ],
+    };
 });
 
 router.get('/:id', async ctx => {
-    ctx.body = await findById(ctx.params.id);
+    const poem = await findById(ctx.params.id);
+
+    ctx.body = {
+        poems: [
+            poem,
+        ],
+    };
 });
 
 export default () => router.routes();
