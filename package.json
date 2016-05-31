@@ -45,6 +45,7 @@
     "koa-router": "7.0.1",
     "mkdirp": "0.5.1",
     "mongodb": "2.1.18",
-    "mongoose": "4.4.14"
+    "mongoose": "4.4.14",
+    "slug": "0.9.1"
   }
 }
